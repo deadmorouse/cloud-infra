@@ -5,7 +5,7 @@ resource "yandex_iam_service_account" "netology1" {
 
 
 resource "yandex_resourcemanager_folder_iam_member" "ig-editor" {
-    folder_id = var.yandex_folder_id
+    folder_id = var.yc_folder_id
     role      = "editor"
     member    = "serviceAccount:${yandex_iam_service_account.netology1.id}"
 }
@@ -13,7 +13,7 @@ resource "yandex_resourcemanager_folder_iam_member" "ig-editor" {
 
 resource "yandex_compute_instance_group" "ig-1" {
     name               = "fixed-ig-with-balancer"
-    folder_id          = var.yandex_folder_id
+    folder_id          = var.yc_folder_id
     service_account_id = yandex_iam_service_account.netology1.id
 
     instance_template {
@@ -54,7 +54,7 @@ EOF
     }
 
     allocation_policy {
-        zones = [var.a-zone]
+        zones = [var.yc_zone]
     }
 
     deploy_policy {

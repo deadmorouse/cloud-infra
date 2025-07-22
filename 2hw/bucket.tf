@@ -4,13 +4,13 @@ resource "yandex_iam_service_account" "netology" {
 }
 
 resource "yandex_resourcemanager_cloud_iam_member" "sa-bucket-admin" {
-  cloud_id = var.yandex_cloud_id
+  cloud_id = var.yc_cloud_id
   role     = "storage.admin"
   member   = "serviceAccount:${yandex_iam_service_account.netology.id}"
 }
 
 resource "yandex_resourcemanager_folder_iam_member" "bucket-editor" {
-    folder_id = var.yandex_folder_id
+    folder_id = var.yc_folder_id
     role      = "storage.editor"
     member    = "serviceAccount:${yandex_iam_service_account.netology.id}"
     depends_on = [yandex_iam_service_account.netology]
